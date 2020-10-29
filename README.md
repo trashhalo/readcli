@@ -1,6 +1,6 @@
 # readcli
 
-Tool to that lets you read website content* on the command line. 
+Tool that lets you read website content* on the command line. 
 
 ## Usage
 
