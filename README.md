@@ -10,6 +10,18 @@ readcli https://medium.com/compass-true-north/go-unit-testing-at-compass-3a7cb85
 
 ![](./sample.png)
 
+## Install
+
+### homebrew
+
+```
+brew install trashhalo/homebrew-brews/readcli
+```
+
+### prebuilt packages
+
+Prebuilt packages can be found at the [releases page](https://github.com/trashhalo/imgcat/readcli)
+
 ## Website Content
 
 The algorithm is as follows:
