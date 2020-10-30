@@ -20,7 +20,7 @@ brew install trashhalo/homebrew-brews/readcli
 
 ### prebuilt packages
 
-Prebuilt packages can be found at the [releases page](https://github.com/trashhalo/imgcat/readcli)
+Prebuilt packages can be found at the [releases page](https://github.com/trashhalo/readcli/releases)
 
 ## Website Content
 
