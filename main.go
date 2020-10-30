@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"strings"
@@ -12,38 +13,53 @@ import (
 	"github.com/charmbracelet/glamour"
 	"github.com/go-shiori/go-readability"
 	"github.com/mattn/go-runewidth"
+
+	"github.com/urfave/cli/v2"
 )
 
 func main() {
-	url := os.Args[1]
-	article, err := readability.FromURL(url, 30*time.Second)
+	ctx := context.Background()
+	app := cli.App{
+		Name:  "readcli",
+		Usage: "read website content on the command line",
+		Action: func(c *cli.Context) error {
+			url := c.Args().First()
+			if url == "" {
+				return fmt.Errorf("url is required input")
+			}
+
+			article, err := readability.FromURL(url, 30*time.Second)
+			if err != nil {
+				return err
+			}
+
+			converter := md.NewConverter("", true, nil)
+			in, err := converter.ConvertString(article.Content)
+			if err != nil {
+				return err
+			}
+
+			out, err := glamour.Render(in, "dark")
+			if err != nil {
+				return err
+			}
+
+			p := tea.NewProgram(model{title: article.Title, content: out})
+
+			p.EnterAltScreen()
+			defer p.ExitAltScreen()
+
+			p.EnableMouseCellMotion()
+			defer p.DisableMouseCellMotion()
+
+			return p.Start()
+		},
+	}
+	err := app.RunContext(ctx, os.Args)
 	if err != nil {
 		panic(err)
 	}
 
-	converter := md.NewConverter("", true, nil)
-	in, err := converter.ConvertString(article.Content)
-	if err != nil {
-		panic(err)
-	}
-
-	out, err := glamour.Render(in, "dark")
-	if err != nil {
-		panic(err)
-	}
-
-	p := tea.NewProgram(model{title: article.Title, content: out})
-
-	p.EnterAltScreen()
-	defer p.ExitAltScreen()
-
-	p.EnableMouseCellMotion()
-	defer p.DisableMouseCellMotion()
-
-	if err := p.Start(); err != nil {
-		fmt.Println("could not run program:", err)
-		os.Exit(1)
-	}
 }
 
 type model struct {
