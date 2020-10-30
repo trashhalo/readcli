@@ -25,7 +25,7 @@ Prebuilt packages can be found at the [releases page](https://github.com/trashha
 ## Website Content
 
 The algorithm is as follows:
-1. Use [go-readbility](https://github.com/go-shiori/go-readability) to download a stripped down version of the website.
+1. Use [go-readability](https://github.com/go-shiori/go-readability) to download a stripped down version of the website.
 2. Use [html-to-markdown](https://github.com/JohannesKaufmann/html-to-markdown) to convert the clean html to markdown.
 3. Use [glamour](https://github.com/charmbracelet/glamour) to render the markdown content.
 
